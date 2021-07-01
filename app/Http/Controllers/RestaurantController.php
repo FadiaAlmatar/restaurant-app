@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Table;
 use App\Models\Restaurant;
 use App\Models\Reservation;
@@ -10,7 +11,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ReservationTable;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\RestaurantPublished;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Facades\Notification;
 
 
 class RestaurantController extends Controller
@@ -72,9 +75,9 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->user()->cannot('create', Restaurant::class)) {
-            abort(403);
-        }
+        // if ($request->user()->cannot('create', Restaurant::class)) {
+        //     abort(403);
+        // }
         $request->validate([
 
             'name'                     => 'required|min:4|max:255',
@@ -98,6 +101,7 @@ class RestaurantController extends Controller
         $restaurant->user_id = Auth::user()->id;
         $restaurant->slug = Str::slug($request->name, '-');
         $restaurant->tables_count = $request->tables_count;
+        Notification::send(User::all(), new RestaurantPublished($restaurant));
         $restaurant->save();
         // return redirect()->route('restaurants.show', $restaurant);
         // return redirect()->back();

@@ -2,14 +2,13 @@
 
 namespace App\Notifications;
 
-use App\Models\Meal;
+use App\Models\Restaurant;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-
-class MealPublished extends Notification
+class RestaurantPublished extends Notification
 {
     use Queueable;
 
@@ -18,10 +17,9 @@ class MealPublished extends Notification
      *
      * @return void
      */
-
-    public function __construct(Meal $meal)
+    public function __construct(Restaurant $restaurant)
     {
-        $this->meal = $meal;
+        $this->restaurant = $restaurant;
     }
 
     /**
@@ -44,10 +42,10 @@ class MealPublished extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('There are the new meal in restaurant.')
-            ->line($this->meal->name)
-            // ->action('Notification Action', route('meals.show', ['meal' => $this->meal]))
-            ->line('Thank you for using our application!');
+        ->line('There are the new restaurant added.')
+        ->line($this->restaurant->name)
+        // ->action('Notification Action', route('meals.show', ['meal' => $this->meal]))
+        ->line('Thank you for using our application!');
     }
 
     /**

@@ -16,7 +16,13 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReportRouteController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ExportReportController;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use App\Mail\Welcome;
+//
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,18 +34,17 @@ use App\Http\Controllers\ExportReportController;
 |
 */
 //home
-Route::get('/lang/{locale}', function ($locale, HttpRequest $request) {
+Route::get('/lang/{locale}', function ($locale, Request $request) {
     if (!in_array($locale, ['ar', 'en'])) {
 
         abort(400);
     }
     App::setLocale($locale);
-
     $request->session()->put('locale', $locale);
     // dd(Session::get('locale'));
-
     return redirect()->back();
 })->name('locale.toggle');
+
 Route::get('/', [PageController::class, 'home'])->name('home');
 //resource
 Route::resource('restaurants', RestaurantController::class);

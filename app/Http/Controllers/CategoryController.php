@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Restaurant;
 use Illuminate\Support\Str;
+// use TCG\Voyager\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\CategoryPublished;
+use Illuminate\Support\Facades\Notification;
 
 class CategoryController extends Controller
 {
@@ -72,6 +76,7 @@ class CategoryController extends Controller
         $path = $image->store('category-images', 'public');
         $category->image = $path;
         $category->slug = Str::slug($request->type, '-');
+        Notification::send(User::all(), new CategoryPublished($category));
         $category->save();
         return redirect()->route('categories.show', $category);
     }

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Component;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Notifications\MealPublished;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -69,6 +69,7 @@ class MealController extends Controller
     {
         $categories = Category::all();
         $components = Component::all();
+        // Notification::send(User::all(),new mealpublished($meal));
         return view('meal.create',['categories'=> $categories,'components'=>$components]);
     }
 
@@ -100,9 +101,11 @@ class MealController extends Controller
 
         $meal->category_id = $request->category_id;
         $meal->slug = Str::slug($request->name, '-');
+        Notification::send(User::all(), new MealPublished($meal));
         $meal->save();
         $meal->components()->sync($request->components);
-        /*    Notification::send(User::all(), new MealPublished($meal)); */
+
+        // Notification::send(User::all(),new mealpublished($meal));
         return redirect()->route('meals.show', $meal);
     }
     public function order(Meal $meal)

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\JobVacancy;
 use App\Models\Restaurant;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Notifications\JobVacancyPublished;
+use Illuminate\Support\Facades\Notification;
 
 class JobVacancyController extends Controller
 {
@@ -50,6 +53,7 @@ class JobVacancyController extends Controller
         $jobVacancy->slug = Str::slug($request->title, '-');
         $jobVacancy->end_of_vacancy = $request->end_of_vacancy;
         $jobVacancy->restaurant_id = $request->restaurant_id;
+        Notification::send(User::all(), new JobVacancyPublished($jobVacancy));
         $jobVacancy->save();
         // return redirect()->route('jobvacancies.show', $jobVacancy);
         // return  view('restaurant.show',['restaurant'=>$jobVacancy->restaurant_id)];

@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Meal;
-use App\Models\Order;
-use App\Models\Category;
-use App\Models\invoice;
-use App\Models\MealOrder;
-use App\Models\Offer;
-use App\Models\Offerlog;
-use App\Models\Restaurant;
 use App\Models\Sale;
+use App\Models\Offer;
+use App\Models\Order;
+use App\Models\invoice;
 use App\Models\Salelog;
+use App\Models\Category;
+use App\Models\Offerlog;
+use App\Models\MealOrder;
+use App\Models\Restaurant;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class OrderController extends Controller
@@ -71,13 +72,15 @@ class OrderController extends Controller
         $invoice=new invoice();
         $order->place = $request->place;
         $order->notes = $request->notes;
-        $order->user_id = 1;
-        $order->restaurant_id = 1;
+        $order->user_id = Auth::user()->id;
+        $order->restaurant_id = $request->restaurantid;
+        // dd($request->restaurantid);
+        // $reservation->restaurant_id =$request->restaurantid;
         $order->discount_id = 1;
         $order->donation = $request->donation;
         $order->slug = Str::slug($request->place, '-');
         $order->save();
-        $invoice->restaurant_id=1;
+        $invoice->restaurant_id=2;
         $invoice->order_id=$order->id;
         $sum = 0;
         $is_offer=Offer::where('restaurant_id',$order->restaurant_id)->where('End_date', '>=', Carbon::now()->toDateString())->get();

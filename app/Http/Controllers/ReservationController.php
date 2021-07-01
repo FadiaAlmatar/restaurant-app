@@ -62,7 +62,7 @@ class ReservationController extends Controller
             $reservation->time = $request->day;
             // dd(Carbon::now()->between($request->day,$request->day->addHour(2)));
             // $reservation->time = date("h:i A",strtotime( $request->time ));
-            $reservation->user_id = 1;
+            $reservation->user_id = Auth::user()->id;
             $reservation->restaurant_id =$request->restaurantid;
             // $reservation->slug = Str::slug($request->place, '-');
             $reservation->save();

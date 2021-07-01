@@ -77,6 +77,7 @@ class CategoryController extends Controller
         $category->image = $path;
         $category->slug = Str::slug($request->type, '-');
         Notification::send(User::all(), new CategoryPublished($category));
+
         $category->save();
         return redirect()->route('categories.show', $category);
     }

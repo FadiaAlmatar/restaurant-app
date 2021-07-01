@@ -285,13 +285,13 @@
 <section class="gallery" id="gallery">
     <h1 class="heading" style="color:orange"> our job <span> vacancy </span> </h1>
     <div class="box-container">
-      @foreach ($restaurant->categories as $category)
+      @foreach ($restaurant->jobVacancies as $jobvacancy)
         <div class="box">
-            <img src="{{asset('images/g-1.jpg')}}" alt="">
+            <img src="{{asset('images/depositphotos_6509200-stock-photo-searching-for-jobs.jpg')}}" alt="">
             <div class="content">
-                <h3>{{$category->type}}</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti, ipsum.</p>
-                <a href="{{route('res-order.createorder',$restaurant->id)}}" class="btn">ordern now</a>
+                <h3>{{$jobvacancy->title}}</h3>
+                <p>{!!$jobvacancy->description !!}</p>
+                <a href="{{route('res-order.createorder',$restaurant->id)}}" class="btn">send</a>
             </div>
         </div>
         @endforeach

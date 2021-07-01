@@ -79,8 +79,6 @@ class OrderController extends Controller
         $order->save();
         $invoice->restaurant_id=1;
         $invoice->order_id=$order->id;
-
-
         $sum = 0;
         $is_offer=Offer::where('restaurant_id',$order->restaurant_id)->where('End_date', '>=', Carbon::now()->toDateString())->get();
 $check=0;
@@ -94,37 +92,28 @@ if ($is_offer->count()>0){
         $offer_log->user_id=1;
         $offer_log->restaurant_id=1;
         $offer_log->save();
-
-
         $check=1;
 }
         foreach($request->meals as $meal){
             $mealorder = new MealOrder();
-
             $mealorder->meal_id=$meal;
             $mealorder->quantity=$request->{"quantity".$meal};
             $mealorder->order_id=$order->id;
             if($check==0) {
             $is_sale=Sale::where('meals_id',$mealorder->meal_id)->where('End_date', '>=', Carbon::now()->toDateString())->get();
-
             //dd($is_sale);
             if ($is_sale->count()>0){
                $mealorder->price = (($request->{"price".$meal} - ($is_sale[0]->discount/100 * ($request->{"price".$meal} )) )* $mealorder->quantity) ;
                 $sum = (($request->{"price".$meal} - ($is_sale[0]->discount/100 * ($request->{"price".$meal} )) )* $mealorder->quantity) + $sum;
-
-
                 $sale_log = new Salelog();
                 $sale_log->sale_id=$is_sale[0]->id;
                 $sale_log->order_id=$order->id;
                 $sale_log->user_id=1;
                 $sale_log->restaurant_id=1;
-
                 $sale_log->save();
-
             }
             else {
             $mealorder->price=$request->{"price".$meal} * $mealorder->quantity;
-
             $sum = ($request->{"price".$meal} * $mealorder->quantity) + $sum;}
             $mealorder->save();
         } else {
@@ -134,7 +123,6 @@ if ($is_offer->count()>0){
       if ($check==0){
       $invoice->count=$sum;
       $invoice->save();}
-
     //   echo "<script>confirm('Cost is $sum');</script>";
       $sum_all = $sum + $request->donation;
         $token = "fxUib1tmro4:APA91bFp2OBuNYGaLPWhC7GuVYJyjg_Ev2ZIRFJzojm3Jz3Nf1AiU6U3N_6XPKP_VQ4ACBHeJyF25d4_qV9qKuCCqOtGahetnRezB6WRQtGhTlqbKqkCbxuKHW-az26k3P_P_w91Ffld";

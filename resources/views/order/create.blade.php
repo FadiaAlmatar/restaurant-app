@@ -21,10 +21,10 @@
             @foreach ($category->meals as $meal)
             <table>
               <tr>
-               <td><input name="meals[]"type="checkbox" value="{{ $meal->id }}">{{ $meal->name }}</td>
-               <td><img src="{{ $meal->image }}" alt="Placeholder image" style="width: 50px;height:50px;" ></td>
-               <td><input name="quantity{{ $meal->id }}" type="number" ></td>
-               <td><input name= "price{{ $meal->id }}"  value= {{$meal->price}}></td>
+               <td><input name="meals[]"type="checkbox" value="{{ $meal->id }}">  <span class="form"> {{ $meal->name }}</span> &nbsp;</td>
+               <td><img src="{{ $meal->image }}" alt="Placeholder image" style="width: 50px;height:50px;" >&nbsp;&nbsp;&nbsp;</td>
+               <td><span class="form">Number: </span> <input name="quantity{{ $meal->id }}" type="number" placeholder="enter number" >&nbsp;&nbsp;</td>
+               <td><span class="form">Price: </span> <input name= "price{{ $meal->id }}"  value= {{$meal->price}} style="border:none" readonly></td>
 
              </tr><br>
            </table>
@@ -35,12 +35,7 @@
         <p class="help is-danger">{{ $message }}</p>
       @enderror
     </div>
-    <div class='field'>
-      <label class="label_form">Donation To The Needy</label>
-      <div class="control">
-          <input type="number" value="0" name="donation" class="input"/>
-      </div>
-    </div>
+
     <div class="field">
       <label class="label form">Notes</label>
       <div class="control">
@@ -50,6 +45,12 @@
       @error('notes')
         <p class="help is-danger">{{ $message }}</p>
       @enderror
+    </div>
+    <div class='field'>
+      <label class="label_form form">Donation To The Needy</label>
+      <div class="control">
+          <input type="number" value="0" name="donation" class="input"/>
+      </div>
     </div>
     <div class="field is-grouped">
       <div class="control">

@@ -94,7 +94,7 @@
         </li>
         <li class="nav-item dropdown">
 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-  {{-- {{Auth::User()->name}} --}} Fadia ALMatar
+  {{Auth::User()->name}}
   <span class="caret"></span>
 </a>
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -223,8 +223,8 @@
             <img src="{{asset('/BackEndSourceFile')}}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">
-              {{-- {{Auth::User()->name}} --}} Fadia ALMatar
+            <a href="{{-- {{ route('edit') }}  --}} " class="d-block">
+              {{Auth::User()->name}}
             </a>
           </div>
         </div>

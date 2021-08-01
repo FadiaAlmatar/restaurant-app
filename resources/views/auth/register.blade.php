@@ -51,6 +51,12 @@
           </div>
       </div>
 
+
+      <input type="checkbox" name="nameOfChoice" value="1" checked>
+            {{__('check in accpet on')}} <a href="privecy">Privcy and Policy</a>
+
+
+
       <hr>
 
       <div class="field is-form-action-buttons">

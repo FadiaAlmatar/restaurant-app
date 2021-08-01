@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Mail\Welcome;
+use TCG\Voyager\Facades\Voyager;
+
 //
 /*
 |--------------------------------------------------------------------------
@@ -63,16 +65,16 @@ Route::get('/table/{id}', [TableController::class, 'createtable'])->name('res-ta
 Route::get('/reservation/{id}', [ReservationController::class, 'createreservation'])->name('res-reservation.createreservation');
 Route::post('/mealorder/{id}', [MealOrderController::class, 'storeorder'])->name('meal-order.storeorder');
 // Route::post('/tables',[TableController::class,'storetable'])->name('res-table.storetable');
-Route::get('/restaurant',[RestaurantController::class,'search'])->name('restaurants.search');
-Route::get('/category',[CategoryController::class,'search'])->name('categories.search');
-Route::get('/meal',[MealController::class,'search'])->name('meals.search');
+Route::get('/restaurant', [RestaurantController::class, 'search'])->name('restaurants.search');
+Route::get('/category', [CategoryController::class, 'search'])->name('categories.search');
+Route::get('/meal', [MealController::class, 'search'])->name('meals.search');
 
-Route::get("/chart", [ReportRouteController::class,'blde'])->name('chart');
+Route::get("/chart", [ReportRouteController::class, 'blde'])->name('chart');
 
-Route::post("/routef", [ReportRouteController::class,'routef'])->name('routef');
+Route::post("/routef", [ReportRouteController::class, 'routef'])->name('routef');
 
 
-Route::post("/invicechart", [ChartController::class,'InvoicesChart'])->name('invoicechart');
+Route::post("/invicechart", [ChartController::class, 'InvoicesChart'])->name('invoicechart');
 
 Route::get('importExportView', [ExportReportController::class, 'importExportView']);
 Route::get('export', [ExportReportController::class, 'export'])->name('export');
@@ -121,7 +123,7 @@ require __DIR__ . '/auth.php';
 //     // $restaurant = Restaurant::where('restaurant_id' , '=' , $id)->get();
 //     // $meals = Meal::where('meal_id' , '=' , $meal_id)->get();
 //     return view ('order.create',['meals'=>$meals,'restaurant'=>$restaurant]);
-    // return view('pages.post', ['post' => $post]);
+// return view('pages.post', ['post' => $post]);
 // });
 
 

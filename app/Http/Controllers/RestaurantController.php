@@ -35,26 +35,25 @@ class RestaurantController extends Controller
         // $restaurants = Restaurant:: where('name', 'like', '%raw%')->get();
         return view('restaurant.index', ['restaurants' => $restaurants]);
     }
-    public function search( Request $request)
+    public function search(Request $request)
     {
         $name =  $request->name;
         $search =  $request->search;
-        if ($name == null){
+        if ($name == null) {
             echo "<script>alert('please enter word to search');</script>";
         }
-        if($search == "name" or $search == null){
-           $restaurants = Restaurant:: where('name', 'like', '%'.$name.'%')->get();
-           return view('restaurant.index', ['restaurants' => $restaurants]);
-        }
-        if($search == "city"){
-            $restaurants = Restaurant:: where('city', 'like', '%'.$name.'%')->get();
+        if ($search == "name" or $search == null) {
+            $restaurants = Restaurant::where('name', 'like', '%' . $name . '%')->get();
             return view('restaurant.index', ['restaurants' => $restaurants]);
-            }
-        if($search == "address"){
-             $restaurants = Restaurant:: where('address', 'like', '%'.$name.'%')->get();
-             return view('restaurant.index', ['restaurants' => $restaurants]);
-             }
-
+        }
+        if ($search == "city") {
+            $restaurants = Restaurant::where('city', 'like', '%' . $name . '%')->get();
+            return view('restaurant.index', ['restaurants' => $restaurants]);
+        }
+        if ($search == "address") {
+            $restaurants = Restaurant::where('address', 'like', '%' . $name . '%')->get();
+            return view('restaurant.index', ['restaurants' => $restaurants]);
+        }
     }
     /**
      * Show the form for creating a new resource.
@@ -97,7 +96,7 @@ class RestaurantController extends Controller
         $restaurant->image = $path;
         $restaurant->city = $request->city;
         $restaurant->address = $request->address;
-        $restaurant->description= $request->description;
+        $restaurant->description = $request->description;
         $restaurant->user_id = Auth::user()->id;
         $restaurant->slug = Str::slug($request->name, '-');
         $restaurant->tables_count = $request->tables_count;
@@ -106,7 +105,7 @@ class RestaurantController extends Controller
         // return redirect()->route('restaurants.show', $restaurant);
         // return redirect()->back();
 
-    //   dd($restaurant->tables_count);
+        //   dd($restaurant->tables_count);
         return redirect()->route('res-table.createtable', $restaurant->id);
         // return view('table.create', ['restaurant' => $restaurant]);
 
@@ -126,18 +125,17 @@ class RestaurantController extends Controller
         $tables = Table::all();
         $restab = ReservationTable::all();
         $reservation = Reservation::all();
-        foreach ($reservation as $reserve){
-            $end_time = date("Y-m-d H:i:s", strtotime('+2 hours',strtotime($reserve->time)));
+        foreach ($reservation as $reserve) {
+            $end_time = date("Y-m-d H:i:s", strtotime('+2 hours', strtotime($reserve->time)));
             // $new_date = date("Y-m-d H:i:s", strtotime('+4 hours', strtotime($date));
             // dd($end_time);
-            if(Carbon::now()->between($reserve->time,$end_time)){
-                  $tab = Table::where('id',$reserve->table)->first();
-                   $tab->status = 1;
-                   $tab->save();
-
+            if (Carbon::now()->between($reserve->time, $end_time)) {
+                $tab = Table::where('id', $reserve->table)->first();
+                $tab->status = 1;
+                $tab->save();
             }
-            if(Carbon::now() >= $end_time){
-                $tab = Table::where('id',$reserve->table)->first();
+            if (Carbon::now() >= $end_time) {
+                $tab = Table::where('id', $reserve->table)->first();
                 $tab->status = 0;
                 $tab->save();
             }
@@ -147,7 +145,7 @@ class RestaurantController extends Controller
         // foreach($tables as $table){
         //        dd($table->id);
         // }
-        return view('restaurant.show', ['restaurant' => $restaurant,'tables' => $tables]);
+        return view('restaurant.show', ['restaurant' => $restaurant, 'tables' => $tables]);
     }
 
     /**
@@ -159,7 +157,7 @@ class RestaurantController extends Controller
     public function edit(Restaurant $restaurant)
     {
 
-        return view('restaurant.edit',['restaurant' => $restaurant]);
+        return view('restaurant.edit', ['restaurant' => $restaurant]);
     }
 
 
@@ -189,11 +187,10 @@ class RestaurantController extends Controller
         $restaurant->image = $path;
         $restaurant->city = $request->city;
         $restaurant->address = $request->address;
-        $restaurant->description= $request->description;
+        $restaurant->description = $request->description;
         $restaurant->slug = Str::slug($request->name, '-');
         $restaurant->save();
         return redirect()->route('restaurants.show', $restaurant);
-
     }
 
     /**
@@ -207,20 +204,21 @@ class RestaurantController extends Controller
         //
     }
 
-    function Getlocation () {
+    function Getlocation()
+    {
         //request()->ip();
         //5.0.255.255
         //31.193.79.255
         //static ip for now ..
-        $ip ='5.0.255.255';
+        $ip = '5.0.255.255';
         $data = Location::get($ip);
 
-            $restaurants = Restaurant:: where('city', 'like', '%'.$data->regionName.'%')->orwhere('address', 'like', '%'.$data->cityName.'%')->get();
-            return view('restaurant.index', ['restaurants' => $restaurants]);
+        $restaurants = Restaurant::where('city', 'like', '%' . $data->regionName . '%')->orwhere('address', 'like', '%' . $data->cityName . '%')->get();
+        return view('restaurant.index', ['restaurants' => $restaurants]);
 
-      dd($restaurants);
+        dd($restaurants);
         //echo $data->cityName;
 
 
-}
+    }
 }

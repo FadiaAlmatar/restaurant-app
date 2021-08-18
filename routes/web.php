@@ -89,44 +89,6 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Route::get('/order/{id}',[OrderController::class,'order'])->name('res-order.order');;
-
-//  Route::get('/order/create', function (Restaurant $restaurant) {
-//     // $restaurant = Restautaurant::findOrFail($id);
-//     dd('hello');
-//     $meals = Meal::all();
-//     // $restaurants = Restaurant::all();
-//     // $restaurant = Restaurant::where('restaurant_id' , '=' , $id)->get();
-//     // $meals = Meal::where('meal_id' , '=' , $meal_id)->get();
-//     return view ('order.create',['meals'=>$meals,'restaurant'=>$restaurant]);
-// return view('pages.post', ['post' => $post]);
-// });
-
-
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });

@@ -136,6 +136,13 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'spatie/laravel-translatable' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Translatable\\TranslatableServiceProvider',
+    ),
+  ),
   'stevebauman/location' => 
   array (
     'providers' => 

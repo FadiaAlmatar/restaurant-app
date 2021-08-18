@@ -2,7 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Models\Category;
+
+use App\Models\CategoryMeal;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,7 +18,7 @@ class CategoryPublished extends Notification
      *
      * @return void
      */
-    public function __construct(Category $category)
+    public function __construct(CategoryMeal $category)
     {
         $this->category = $category;
     }
@@ -42,10 +43,10 @@ class CategoryPublished extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->line('There are the new category in restaurant.')
-        ->line($this->category->type)
-        // ->action('Notification Action', route('meals.show', ['meal' => $this->meal]))
-        ->line('Thank you for using our application!');
+            ->line('There are the new category in restaurant.')
+            ->line($this->category->type)
+            // ->action('Notification Action', route('meals.show', ['meal' => $this->meal]))
+            ->line('Thank you for using our application!');
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Category;
+
+use App\Models\CategoryMeal;
 use App\Models\Restaurant;
 use Illuminate\Support\Str;
 // use TCG\Voyager\Models\User;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\CategoryPublished;
 use Illuminate\Support\Facades\Notification;
 
-class CategoryController extends Controller
+class CategoryMealController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,21 +28,20 @@ class CategoryController extends Controller
     }
     public function index()
     {
-        $categories = Category::all();
+        $categories = CategoryMeal::all();
         return view('category.index', ['categories' => $categories]);
     }
-    public function search( Request $request)
+    public function search(Request $request)
     {
-        $name=  $request->name;
+        $name =  $request->name;
         $search =  $request->search;
-        if ($name== null){
+        if ($name == null) {
             echo "<script>alert('please enter word to search');</script>";
         }
-        if($search == "type" or $search == null){
-           $categories = Category:: where('type', 'like', '%'.$name.'%')->get();
-           return view('category.index', ['categories' => $categories]);
+        if ($search == "type" or $search == null) {
+            $categories = CategoryMeal::where('type', 'like', '%' . $name . '%')->get();
+            return view('category.index', ['categories' => $categories]);
         }
-
     }
 
     /**
@@ -52,7 +52,7 @@ class CategoryController extends Controller
     public function create()
     {
         $restaurants = Restaurant::all();
-        return view('category.create',['restaurants' => $restaurants]);
+        return view('category.create', ['restaurants' => $restaurants]);
     }
 
     /**
@@ -68,7 +68,7 @@ class CategoryController extends Controller
             'restaurant_id'            => 'required|numeric|exists:restaurants,id',
             'image'                    => 'required|file|image'
         ]);
-        $category = new Category();
+        $category = new CategoryMeal();
         $category->type = $request->type;
         $category->restaurant_id = $request->restaurant_id;
         $category->image = $request->image;
@@ -88,7 +88,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(CategoryMeal $category)
     {
         return view('category.show', ['category' => $category]);
     }
@@ -99,10 +99,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(CategoryMeal $category)
     {
         $restaurants = Restaurant::all();
-        return view('category.edit',['category' => $category,'restaurants' => $restaurants]);
+        return view('category.edit', ['category' => $category, 'restaurants' => $restaurants]);
     }
 
     /**
@@ -112,7 +112,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, CategoryMeal $category)
     {
         $request->validate([
             'type'                     => 'required|min:4|max:255',
@@ -129,7 +129,6 @@ class CategoryController extends Controller
         $category->slug = Str::slug($request->type, '-');
         $category->save();
         return redirect()->route('categories.show', $category);
-
     }
 
     /**
@@ -138,7 +137,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(CategoryMeal $category)
     {
         //
     }

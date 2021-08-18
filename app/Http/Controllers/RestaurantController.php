@@ -26,8 +26,6 @@ class RestaurantController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
-        if (Auth::check() && Auth::user()->role_id != 3) {
-        }
     }
     public function index()
     {

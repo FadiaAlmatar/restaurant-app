@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Models\Meal;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MealController;
@@ -10,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\MealOrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
@@ -39,3 +39,5 @@ Route::get('privecy', function () {
     return view('pages.privecypolicy');
 });
 Route::get('edit', [UserController::class, 'show'])->name('edit');
+Route::get('c/', [CurrencyController::class, 'index']);
+Route::post('c/{alia}', [CurrencyController::class, 'exchangeCurrency']);

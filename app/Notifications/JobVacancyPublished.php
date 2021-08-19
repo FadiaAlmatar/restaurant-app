@@ -20,7 +20,6 @@ class JobVacancyPublished extends Notification
     public function __construct(JobVacancy $jobvacancy)
     {
         $this->jobvacancy = $jobvacancy;
-
     }
 
     /**
@@ -43,10 +42,10 @@ class JobVacancyPublished extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->line('There is new vacancy in restaurant.')
-        ->line($this->jobvacancy->title)
-        // ->action('Notification Action', route('meals.show', ['meal' => $this->meal]))
-        ->line('Thank you for using our application!');
+            ->line('There is new vacancy in restaurant.')
+            ->line($this->jobvacancy->title)
+            // ->action('Notification Action', route('meals.show', ['meal' => $this->meal]))
+            ->line('Thank you for using our application!');
     }
 
     /**

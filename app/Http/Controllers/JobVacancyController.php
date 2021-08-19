@@ -30,7 +30,7 @@ class JobVacancyController extends Controller
     public function create()
     {
         $restaurants = Restaurant::all();
-        return view('jobvacancy.create',['restaurants' => $restaurants]);
+        return view('jobvacancy.create', ['restaurants' => $restaurants]);
     }
 
     /**
@@ -44,12 +44,12 @@ class JobVacancyController extends Controller
         $request->validate([
             'title'                     => 'required|min:4|max:255',
             'description'              => 'required|min:4',
-            'end_of_vacancy'            =>'required|date',
+            'end_of_vacancy'            => 'required|date',
             'restaurant_id'            => 'required|numeric|exists:restaurants,id',
         ]);
         $jobVacancy = new JobVacancy();
         $jobVacancy->title = $request->title;
-        $jobVacancy->description= $request->description;
+        $jobVacancy->description = $request->description;
         $jobVacancy->slug = Str::slug($request->title, '-');
         $jobVacancy->end_of_vacancy = $request->end_of_vacancy;
         $jobVacancy->restaurant_id = $request->restaurant_id;

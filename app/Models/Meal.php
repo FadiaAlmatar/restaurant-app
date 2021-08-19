@@ -12,13 +12,17 @@ class Meal extends Model
     {
         return $this->belongsToMany(Component::class);
     }
-    public function category ()
+    public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(CategoryMeal::class);
     }
     public function orders()
     {
         return $this->belongsToMany(Order::class);
+    }
+    public function favorites()
+    {
+        return $this->belongsToMany(Favorite::class);
     }
     public function getRouteKeyName()
     {
@@ -32,5 +36,4 @@ class Meal extends Model
     {
         return $this->hasMany(Sale::class);
     }
-
 }

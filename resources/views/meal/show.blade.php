@@ -17,7 +17,8 @@
             {{-- <li><a href="{{ route('restaurants.delete', $restaurant->id) }}" style="text-decoration:none; color:orange;"><b>Delete</b></a></li> --}}
             <li><a href="{{ route('meals.create') }}"style="text-decoration:none; color:orange;"><b>Create New Meal</b></a></li>
             {{-- <li><a href="{{route('mealorder.show', $meal->id)}}"style="text-decoration:none; color:orange;"><b>Add To Order</b></a></li> --}}
-               <li><a href="{{route('res-order.createorder', $meal->id)}}"style="text-decoration:none; color:orange;"><b>Add To Order</b></a></li>
+
+            <li><a href="{{route('res-order.createorder', $meal->id)}}"style="text-decoration:none; color:orange;"><b>Add To Order</b></a></li>
 
             <li><a href="#"style="text-decoration:none; color:orange;"><b>Order more</b></a></li>
             <li><a href="{{ route('meals.index') }}"style="text-decoration:none; color:orange;"><b>Show Meal in same category</b></a></li>
@@ -31,6 +32,7 @@
       <div>
        <p> {{ $meal->calory }}</p>
        <p> {{$meal->price}}</p>
+
 
       </div>
       </div>

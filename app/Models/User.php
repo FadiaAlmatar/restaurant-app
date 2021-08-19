@@ -35,7 +35,10 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasMany(Salelog::class);
     }
-
+    public function favorite()
+    {
+        return $this->hasMany(Favorite::class);
+    }
     public function restaurant()
     {
         return $this->hasOne(Restaurant::class);

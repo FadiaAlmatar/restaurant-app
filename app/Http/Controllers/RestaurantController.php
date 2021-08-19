@@ -98,7 +98,7 @@ class RestaurantController extends Controller
         $restaurant->user_id = Auth::user()->id;
         $restaurant->slug = Str::slug($request->name, '-');
         $restaurant->tables_count = $request->tables_count;
-        Notification::send(User::all(), new RestaurantPublished($restaurant));
+        /* Notification::send(User::all(), new RestaurantPublished($restaurant)); */
         $restaurant->save();
         // return redirect()->route('restaurants.show', $restaurant);
         // return redirect()->back();

@@ -8,6 +8,7 @@ use App\Models\Restaurant;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\ReservationTable;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -34,7 +35,7 @@ class ReservationController extends Controller
     {
         $restaurant = Restaurant::findOrFail($id);
         $tables = Table::all();
-        return view ('reservation.create',['restaurant'=>$restaurant,'tables'=>$tables]);
+        return view('reservation.create', ['restaurant' => $restaurant, 'tables' => $tables]);
     }
 
     /**
@@ -56,14 +57,14 @@ class ReservationController extends Controller
             // 'time'                     =>'required',
             'tables'                   => 'required'
         ]);
-        foreach($request->tables as $table){
+        foreach ($request->tables as $table) {
             $reservation = new Reservation();
-            $reservation->table=$table;
+            $reservation->table = $table;
             $reservation->time = $request->day;
             // dd(Carbon::now()->between($request->day,$request->day->addHour(2)));
             // $reservation->time = date("h:i A",strtotime( $request->time ));
             $reservation->user_id = Auth::user()->id;
-            $reservation->restaurant_id =$request->restaurantid;
+            $reservation->restaurant_id = $request->restaurantid;
             // $reservation->slug = Str::slug($request->place, '-');
             $reservation->save();
             // dd("success");
@@ -71,17 +72,17 @@ class ReservationController extends Controller
             // dd($tab->id);
             // foreach($tabless as $tab){
             // if($tab->id ==  $reservation->table){
-               $restab = new ReservationTable();
+            $restab = new ReservationTable();
             //    $tabb = $tab;
-               $restab->reservation_id = $reservation->id;
-               $restab->table_id = $reservation->table;
-               $restab->save();
-               $timezone = date_default_timezone_get();
+            $restab->reservation_id = $reservation->id;
+            $restab->table_id = $reservation->table;
+            $restab->save();
+            $timezone = date_default_timezone_get();
             // echo "The current server timezone is: "
             //  dd($timezone);
             //    dd($tabb->reservation_id);
             // }
-        // }
+            // }
 
         }
         echo "<script>confirm('done');</script>";

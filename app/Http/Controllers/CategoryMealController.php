@@ -23,8 +23,6 @@ class CategoryMealController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
-        if (Auth::check() && Auth::user()->role_id != 3) {
-        }
     }
     public function index()
     {
@@ -76,7 +74,7 @@ class CategoryMealController extends Controller
         $path = $image->store('category-images', 'public');
         $category->image = $path;
         $category->slug = Str::slug($request->type, '-');
-        Notification::send(User::all(), new CategoryPublished($category));
+        /*  Notification::send(User::all(), new CategoryPublished($category)); */
 
         $category->save();
         return redirect()->route('categories.show', $category);

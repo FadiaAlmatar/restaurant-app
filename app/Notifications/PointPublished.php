@@ -2,13 +2,14 @@
 
 namespace App\Notifications;
 
-use App\Models\Restaurant;
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+use Intervention\Image\Point;
 
-class RestaurantPublished extends Notification
+class PointPublished extends Notification
 {
     use Queueable;
 
@@ -17,9 +18,9 @@ class RestaurantPublished extends Notification
      *
      * @return void
      */
-    public function __construct(Restaurant $restaurant)
+    public function __construct(Order $order)
     {
-        $this->restaurant = $restaurant;
+        $this->order = $order;
     }
 
     /**
@@ -42,8 +43,8 @@ class RestaurantPublished extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('There are the new restaurant added.')
-            ->line($this->restaurant->name)
+            ->line('THanks for your request from ,we have got a points you can use on another free request.your current balance is')
+            ->line($this->user->point)
             ->line('Thank you for using our application!');
     }
 

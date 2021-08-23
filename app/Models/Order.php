@@ -12,7 +12,6 @@ class Order extends Model
     public function meals()
     {
         return $this->belongsToMany(Meal::class)->withpivot('quantity');
-
     }
     public function invoice()
     {
@@ -43,5 +42,4 @@ class Order extends Model
     {
         return 'slug';
     }
-
 }

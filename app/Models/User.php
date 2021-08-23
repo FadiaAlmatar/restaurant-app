@@ -44,10 +44,7 @@ class User extends \TCG\Voyager\Models\User
         return $this->hasOne(Restaurant::class);
     }
 
-    // public function role()
-    // {
-    //     return $this->belongsTo(Role::class);
-    // }
+
     /**
      * The attributes that should be hidden for arrays.
      *

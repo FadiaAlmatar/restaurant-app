@@ -1,52 +1,45 @@
 <x-layouts.app>
   <x-navbar/>
-  <x-slot name="styles">
-    <link rel="stylesheet" href="{{ asset('css/pages/model.css') }}">
-  </x-slot>
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
+  <section class="hero is-large ">
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
+      <div class="hero-body has-text-centered" >
+        <p class="title">
+          Sanabel Blog
+        </p>
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
-  </div>
+      <form class="d-flex" action="{{ route('restaurants.search') }}" method="GET">
+        <input name="name" id="search"class="form-control me-2" type="search" placeholder="{{ __('validation.attributes.Enter name,city or address of Restaurant') }}" aria-label="Search" style="border-color:orange">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: orange">
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <input type="radio" name="search" value="name"> {{ __('validation.attributes.name') }}<br>
+      <input type="radio" name="search" value="address"> {{ __('validation.attributes.address') }}<br>
+      <input type="radio" name="search" value="city"> {{ __('validation.attributes.city') }}<br>
+      </ul>
+      </li>
+      <button class="btn btn-success" type="submit">{{ __('validation.attributes.search') }}</button>
+      </form>
+      </div>
 
-</div>
-<x-slot name="scripts">
-  <script>
-    // Get the modal
-var modal = document.getElementById("myModal");
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="title is-3 has-text-centered">
+        Our Top Restaurants
+      </div>
+      <div>
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+          @foreach ($restaurant as $item)
+          <li><a href="{{ route('restaurants.show',$item) }}"itemprop="url"><img src="{{$item->image}}" itemprop="image"/></a></li>
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+          @endforeach
 
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
-}
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+      </div>
+    </div>
+  </section>
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-</script>
-</x-slot>
-
-    <x-carousel/>
 
 </x-layouts.app>
 

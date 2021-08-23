@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
 		============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/img/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <!-- Google Fonts
 		============================================ -->
 
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('css/css/bootstrap.min.css') }}">
     <!-- Bootstrap CSS
 		============================================ -->
-    <link rel="stylesheet" href="{{ asset('font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/css/font-awesome.min.css') }}">
 	<!-- nalika Icon CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('css/css/nalika-icon.css') }}">
@@ -203,7 +203,7 @@
           <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="logo-pro">
-                      <a href="index.html"><img class="main-logo" src="{{ asset('images/img/logo/logo.png') }}" alt="" /></a>
+                      <a href="index.html"><img class="main-logo" sPsparc="{{ asset('images/img/logo/logo.png') }}" alt="" /></a>
                   </div>
               </div>
           </div>
@@ -363,7 +363,7 @@
                             <i class="icon nalika-down-arrow nalika-angle-dw nalika-icon"></i>
                           </a>
          <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-             <li><a href="register.html"><span class="icon nalika-home author-log-ic"></span> Register</a>
+             <li><a href="register "><span class="icon nalika-home author-log-ic"></span> Register</a>
              </li>
              <li><a href="#"><span class="icon nalika-user author-log-ic"></span> My Profile</a>
              </li>
@@ -371,7 +371,7 @@
              </li>
              <li><a href="#"><span class="icon nalika-settings author-log-ic"></span> Settings</a>
              </li>
-             <li><a href="login.html"><span class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
+             <li><a href="login"><span class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
              </li>
          </ul>
      </li>

@@ -65,7 +65,7 @@ class PostsTableSeeder extends Seeder
             ])->save();
         }
 
-        $dataRow = $this->dataRow($postDataType, 'category_id');
+        $dataRow = $this->dataRow($postDataType, 'category_meal_id');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text',

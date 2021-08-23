@@ -17,13 +17,11 @@ class ComponentController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
-        if (Auth::check() && Auth::user()->role_id != 3) {
-        }
     }
     public function index()
     {
         $components = Component::all();
-        return view('component.index',['components'=> $components]);
+        return view('component.index', ['components' => $components]);
     }
 
     /**
@@ -33,7 +31,7 @@ class ComponentController extends Controller
      */
     public function create()
     {
-        return view ('component.create');
+        return view('component.create');
     }
 
     /**
@@ -65,8 +63,7 @@ class ComponentController extends Controller
      */
     public function show(Component $component)
     {
-        return view ('component.show',['component' => $component]);
-
+        return view('component.show', ['component' => $component]);
     }
 
     /**
@@ -77,7 +74,7 @@ class ComponentController extends Controller
      */
     public function edit(Component $component)
     {
-        return view ('component.edit',['component' => $component]);
+        return view('component.edit', ['component' => $component]);
     }
 
     /**

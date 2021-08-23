@@ -13,10 +13,13 @@ use App\Models\CategoryMeal;
 use App\Models\Offerlog;
 use App\Models\MealOrder;
 use App\Models\Restaurant;
+use App\Models\User;
+use App\Notifications\PointPublished;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -58,13 +61,14 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         $request->validate([
             'place'                     => 'required|min:4|max:255',
             'notes'                     => 'required|min:4|max:255',
             // 'meals'                     => 'array'
-            'donation'                  => 'required|numeric'
+            'donation'                  => 'required|numeric',
+            'point'                     => 'required'
         ]);
 
         // dd($request->{"quantity"$meal});
@@ -73,7 +77,7 @@ class OrderController extends Controller
         $order->place = $request->place;
         $order->notes = $request->notes;
         $order->user_id = Auth::user()->id;
-        $order->restaurant_id = $request->restaurantid;
+        $order->restaurant_id = $request->restaurant_id;
         // dd($request->restaurantid);
         // $reservation->restaurant_id =$request->restaurantid;
         $order->discount_id = 1;
@@ -128,7 +132,9 @@ class OrderController extends Controller
             $invoice->count = $sum;
             $invoice->save();
         }
-        //   echo "<script>confirm('Cost is $sum');</script>";
+        $order->point = $sum * 0.5;
+        Notification::send($user->user_id, new PointPublished($order));
+
         $sum_all = $sum + $request->donation;
         $token = "fxUib1tmro4:APA91bFp2OBuNYGaLPWhC7GuVYJyjg_Ev2ZIRFJzojm3Jz3Nf1AiU6U3N_6XPKP_VQ4ACBHeJyF25d4_qV9qKuCCqOtGahetnRezB6WRQtGhTlqbKqkCbxuKHW-az26k3P_P_w91Ffld";
         $from = "AAAA0cPI-Fg:APA91bHcqHWlYOVTQVxjU6ot1hL3tGT6uhuZ4mzKvNYHxbfd8fCgZ-sAyhOGYZ57P5LWE0e1J0U6ZHDZVkzUbraifhWhWm6gnsb9kbshQ0rtJ8L-LGaUlKv1JgDFKseKUJ5fKqZL7n9J";
@@ -156,7 +162,7 @@ class OrderController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         $result = curl_exec($ch);
-        /* dd($result); */
+        dd($result);
         curl_close($ch);
         echo "<script>confirm('Cost Meal is $sum  And ALL is $sum_all');</script>";
     }

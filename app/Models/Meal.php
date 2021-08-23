@@ -24,16 +24,21 @@ class Meal extends Model
     {
         return $this->belongsToMany(Favorite::class);
     }
+
     public function getRouteKeyName()
     {
         return 'slug';
     }
-    public function getImageAttribute($value)
+    /*  public function getImageAttribute($value)
     {
         return asset("storage/{$value}");
-    }
+    } */
     public function sales()
     {
         return $this->hasMany(Sale::class);
+    }
+    public function restaurants()
+    {
+        return $this->belongsToMany(Restaurant::class);
     }
 }

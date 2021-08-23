@@ -38,21 +38,6 @@
       </ul>
 
 
-      <form class="d-flex" action="{{ route('restaurants.search') }}" method="GET">
-        <input name="name" id="search"class="form-control me-2" type="search" placeholder="{{ __('validation.attributes.Enter name,city or address of Restaurant') }}" aria-label="Search" style="border-color:orange">
-          {{-- </ul> --}}
-      {{-- </li> --}}
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: orange">
-      </a>
-      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <input type="radio" name="search" value="name"> {{ __('validation.attributes.name') }}<br>
-      <input type="radio" name="search" value="address"> {{ __('validation.attributes.address') }}<br>
-      <input type="radio" name="search" value="city"> {{ __('validation.attributes.city') }}<br>
-      </ul>
-      </li>
-      <button class="btn btn-success" type="submit">{{ __('validation.attributes.search') }}</button>
-      </form>
       <li class="nav-item ">
       <a class="nav-link active" aria-current="page" href="{{route('getbyip')}}" style="color: orange"> {{ __('validation.attributes.by location') }} </a>
       </li>

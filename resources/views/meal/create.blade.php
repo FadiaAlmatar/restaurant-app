@@ -3,7 +3,8 @@
   <section class="section">
   <div class="container">
       <div class="title is-2 form">Create Meal</div>
-      <form action="{{ route('meals.store') }} " method="POST" enctype="multipart/form-data">
+      {{-- <form action="{{ route('meals.store') }}  " method="POST" enctype="multipart/form-data"> --}}
+        <form action=" {{ route('meals.store') }}" method="POST">
        @csrf
        <div class="field">
           <label class="label form"> Meal Name</label>
@@ -34,16 +35,16 @@
         </div>
         <div class="field">
           <label class="label form">Category</label>
-          <div class="control" id="category">
-            <div class="select @error('category_id')is-danger @enderror">
-              <select name="category_id" value="{{ old('category_id') }}">
+          <div class="control" id="category_meal">
+            <div class="select @error('category_meal_id')is-danger @enderror">
+              <select name="category_meal_id" value="{{ old('category_meal_id') }}">
                 @foreach ($categories as $category)
                   <option value="{{ $category->id }}">{{ $category->type }}</option>
                 @endforeach
               </select>
             </div>
           </div>
-          @error('category_id')
+          @error('category_meal_id')
             <p class="help is-danger">{{ $message }}</p>
           @enderror
         </div>
@@ -63,24 +64,26 @@
           @enderror
         </div>
         <div class="field">
-          <label class="label form"> Image</label>
-          <div class="file">
-            <label class="file-label">
-              <input class="file-input" type="file" name="image" accept="image/*">
-              <span class="file-cta">
-                <span class="file-icon">
-                  <i class="fas fa-upload"></i>
-                </span>
-                <span class="file-label">
-                  Choose an image for mael
-                </span>
-              </span>
-            </label>
+          <div class="field">
+            <label class="label form"> Image</label>
+            {{-- <div class="file">
+              <label class="file-label">
+                <input class="file-input" type="file" name="image" accept="image/*">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    Choose an image for meals
+                  </span>
+                </span> --}}
+                <input class="input @error('image')is-danger @enderror is-normal" name="image" type="url"value="{{ old('image') }}" placeholder="Enter Image Meal" >
+              </label>
+            </div>
+            @error('image')
+            <p class="help is-danger">{{ $message }}</p>
+            @enderror
           </div>
-          @error('image')
-          <p class="help is-danger">{{ $message }}</p>
-          @enderror
-        </div>
         <div class="field is-grouped">
           <div class="control">
             <button class=" is-link form-button">Create</button>

@@ -36,15 +36,15 @@
         <div class="field">
           <label class="label form">Category</label>
           <div class="control" id="category">
-            <div class="select @error('category_id')is-danger @enderror">
-              <select name="category_id" value="{{ old('category_id') }}">
+            <div class="select @error('category_meal_id')is-danger @enderror">
+              <select name="category_meal_id" value="{{ old('category_meal_id') }}">
                 @foreach ($categories as $category)
                   <option value="{{ $category->id }}">{{ $category->type }}</option>
                 @endforeach
               </select>
             </div>
           </div>
-          @error('category_id')
+          @error('category_meal_id')
             <p class="help is-danger">{{ $message }}</p>
           @enderror
         </div>

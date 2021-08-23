@@ -2,34 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meal;
-use App\Models\User;
-use App\Models\Category;
 use App\Models\CategoryMeal;
 use App\Models\Component;
-use Illuminate\Support\Str;
+use App\Models\Meal;
 use Illuminate\Http\Request;
-use App\Notifications\MealPublished;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Validator;
 
 class MealController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
-        if (Auth::check() && Auth::user()->role_id != 3) {
-        }
-    }
-    public function index()
-    {
-        $meals = Meal::all();
-        return view('meal.index', ['meals' => $meals]);
+        $this->middleware('auth')->except('show', 'index');
     }
     public function search(Request $request)
     {
@@ -59,101 +43,54 @@ class MealController extends Controller
             return view('meal.index', ['meals' => $meals]);
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function index()
+    {
+        $meal = Meal::paginate(6);
+        return redirect('meal.index', ['meal', $meal]);
+    }
     public function create()
     {
         $categories = CategoryMeal::all();
         $components = Component::all();
-        // Notification::send(User::all(),new mealpublished($meal));
         return view('meal.create', ['categories' => $categories, 'components' => $components]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'name'                     => 'required|min:4|max:255',
-            'price'                    => 'required|numeric',
-            'calory'                   => 'required|numeric',
-            'category_id'              => 'required|numeric|exists:categories,id',
-            'components'               => 'array',
-            'image'                    => 'required|file|image'
+            'name'                 =>         'required|max:255|min:4',
+            'image'                =>         'required|url',
+            'price'                =>         'required|numeric',
+            'calory'               =>         'required|numeric',
+            ///'category_meal_id'     =>         'required|numeric|id',
         ]);
         $meal = new Meal();
         $meal->name = $request->name;
+        $meal->image = $request->image;
+        $meal->category_meal_id = $request->category_meal_id;
         $meal->price = $request->price;
         $meal->calory = $request->calory;
-        $meal->image = $request->image;
-
-        $image = $request->image;
-        $path = $image->store('meal-images', 'public');
-        $meal->image = $path;
-
-        $meal->category_id = $request->category_id;
         $meal->slug = Str::slug($request->name, '-');
-        Notification::send(User::all(), new MealPublished($meal));
         $meal->save();
         $meal->components()->sync($request->components);
-
-        // Notification::send(User::all(),new mealpublished($meal));
         return redirect()->route('meals.show', $meal);
     }
-    public function order(Meal $meal)
-    {
-        // return($meal->name);
-        dd($meal->name);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Meal  $meal
-     * @return \Illuminate\Http\Response
-     */
     public function show(Meal $meal)
     {
-        // dd($meal->id);
         return view('meal.show', ['meal' => $meal]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Meal  $meal
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Meal $meal)
     {
-
         $categories = CategoryMeal::all();
         $components = Component::all();
-        return view('meal.edit', ['meal' => $meal, 'categories' => $categories, 'components' => $components]);
+        return view('meal.edit', ['categories' => $categories, 'components' => $components]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Meal  $meal
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Meal $meal)
     {
         $request->validate([
             'name'                     => 'required|min:4|max:255',
             'price'                    => 'required|numeric',
             'calory'                   => 'required|numeric',
-            'category_id'              => 'required|numeric|exists:categories,id',
+            'category_meal_id'              => 'required|numeric|exists:categories,id',
             'components'               => 'array',
             'image'                    => 'required|file|image'
         ]);
@@ -164,21 +101,13 @@ class MealController extends Controller
         $image = $request->image;
         $path = $image->store('meal-images', 'public');
         $meal->image = $path;
-        $meal->category_id = $request->category_id;
+        $meal->category_meal_id = $request->category_meal_id;
         $meal->slug = Str::slug($request->name, '-');
         $meal->save();
         $meal->components()->sync($request->components);
         return redirect()->route('meals.show', $meal);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Meal  $meal
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Meal $meal)
     {
-        //
     }
 }

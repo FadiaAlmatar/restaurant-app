@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Milon\Barcode\DNS1D;
 
 class PageController extends Controller
 {

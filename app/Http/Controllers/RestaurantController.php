@@ -199,9 +199,21 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        //
+        $restaurant->onlyTrashed();
+        return back();
     }
+    public function restoreAll()
+    {
+        Restaurant::onlyTrashed()->restore();
 
+        return back();
+    }
+    public function restore(Restaurant $restaurant)
+    {
+        $restaurant->withTrashed()->restore();
+
+        return back();
+    }
     function Getlocation()
     {
         //request()->ip();

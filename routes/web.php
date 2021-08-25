@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Models\Meal;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MealController;
@@ -10,12 +10,14 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\CategoryMealController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\DiscountsController;
 use App\Http\Controllers\MealOrderController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReportRouteController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ExportReportController;
+use App\Http\Controllers\QrController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
@@ -58,6 +60,7 @@ Route::resource('tables', TableController::class);
 Route::resource('mealorder', MealOrderController::class);
 Route::resource('reservations', ReservationController::class);
 Route::resource('jobvacancies', JobVacancyController::class);
+Route::resource('discounts', DiscountsController::class);
 
 //functions
 Route::get('/order/{id}', [OrderController::class, 'createorder'])->name('res-order.createorder');
@@ -74,10 +77,10 @@ Route::get("/chart", [ReportRouteController::class, 'blde'])->name('chart');
 Route::post("/routef", [ReportRouteController::class, 'routef'])->name('routef');
 
 
-//Route::post("/invicechart", [ChartController::class, 'InvoicesChart'])->name('invoicechart');
+Route::post("/invicechart", [ChartController::class, 'InvoicesChart'])->name('invoicechart');
 
-//Route::get('importExportView', [ExportReportController::class, 'importExportView']);
-//Route::get('export', [ExportReportController::class, 'export'])->name('export');
+Route::get('importExportView', [ExportReportController::class, 'importExportView']);
+Route::get('export', [ExportReportController::class, 'export'])->name('export');
 Route::get('/RestaurantByIPLocation', [RestaurantController::class, 'Getlocation'])->name('getbyip');
 
 
@@ -88,7 +91,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__ . '/auth.php';
 
-
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+Route::get('download-qr-code/{type}', [QRController::class, 'downloadQRCode'])->name('qrcode.download');

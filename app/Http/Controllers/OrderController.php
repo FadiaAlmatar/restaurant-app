@@ -61,8 +61,9 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
+
         $request->validate([
             'place'                     => 'required|min:4|max:255',
             'notes'                     => 'required|min:4|max:255',
@@ -78,7 +79,7 @@ class OrderController extends Controller
         $order->notes = $request->notes;
         $order->user_id = Auth::user()->id;
         $order->restaurant_id = $request->restaurant_id;
-        // dd($request->restaurantid);
+        // dd($request->restaurant_id);
         // $reservation->restaurant_id =$request->restaurantid;
         $order->discount_id = 1;
         $order->donation = $request->donation;
@@ -132,8 +133,9 @@ class OrderController extends Controller
             $invoice->count = $sum;
             $invoice->save();
         }
-        $order->point = $sum * 0.5;
-        Notification::send($user->user_id, new PointPublished($order));
+        $order->point = $sum * 0.3;
+        /* Notification::send($user->user_id, new PointPublished($order)); */
+
 
         $sum_all = $sum + $request->donation;
         $token = "fxUib1tmro4:APA91bFp2OBuNYGaLPWhC7GuVYJyjg_Ev2ZIRFJzojm3Jz3Nf1AiU6U3N_6XPKP_VQ4ACBHeJyF25d4_qV9qKuCCqOtGahetnRezB6WRQtGhTlqbKqkCbxuKHW-az26k3P_P_w91Ffld";

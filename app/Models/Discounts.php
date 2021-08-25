@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Discounts extends Model
 {
     use HasFactory;
-    public function orders()
+    public function user()
     {
         return $this->hasMany(Order::class);
     }
     public function getRouteKeyName()
     {
         return 'slug';
-
     }
 }

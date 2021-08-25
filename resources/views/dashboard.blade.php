@@ -371,8 +371,13 @@
              </li>
              <li><a href="#"><span class="icon nalika-settings author-log-ic"></span> Settings</a>
              </li>
-             <li><a href="login"><span class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
-             </li>
+             <li>
+              <form action="{{ route('logout') }}" method="post">
+                @csrf
+                <input type="submit"  value="Logout">
+              </form>
+
+            </li>
          </ul>
      </li>
      <li class="nav-item nav-setting-open"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="icon nalika-menu-task"></i></a>

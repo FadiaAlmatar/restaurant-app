@@ -47,6 +47,7 @@
                       <span class="title is-6 form">{{ $meal->price }} SYP</span>
 
 
+
                     </div>
                   </div>
                   </a>

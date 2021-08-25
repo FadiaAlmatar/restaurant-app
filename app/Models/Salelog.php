@@ -10,34 +10,26 @@ class Salelog extends Model
     use HasFactory;
 
 
-    
+
     public function sale()
-
-
-    
-
     {
-        return $this->belongsTo(Sale::class);}
+        return $this->belongsTo(Sale::class);
+    }
 
-        public function user()
-        {
-            return $this->belongsTo(User::class);}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-            public function order()
-            {
+    public function order()
+    {
 
-                return $this->belongsTo(Order::class);
-            
-            
-            }
-
-            
-            public function resturant()
-            {
-                return $this->belongsTo(Restaurant::class);}
-            
-
-            }
+        return $this->belongsTo(Order::class);
+    }
 
 
-
+    public function resturant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
+}

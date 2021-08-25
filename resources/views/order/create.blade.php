@@ -5,7 +5,7 @@
   <div class="title is-2 form">Make Your Order from {{$restaurant->name}} Restaurant</div>
   <form action=" {{route('orders.store')}}" method="POST" >
     @csrf
-    <input type="number" name="restaurantid" value="{{$restaurant->id}}" hidden>
+    <input type="number" name="restaurant_id" value="{{$restaurant->id}}" hidden>
     <div class="field">
       <label class="label form">Place</label>
       <div class="control">

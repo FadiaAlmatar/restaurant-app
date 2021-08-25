@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\CategoryMeal;
 use App\Models\Component;
 use App\Models\Meal;
+use App\Models\User;
+use App\Notifications\MealPublished;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 
@@ -72,6 +75,7 @@ class MealController extends Controller
         $meal->slug = Str::slug($request->name, '-');
         $meal->save();
         $meal->components()->sync($request->components);
+        Notification::send(User::all(), new MealPublished($meal));
         return redirect()->route('meals.show', $meal);
     }
     public function show(Meal $meal)
